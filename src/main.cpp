@@ -9,7 +9,9 @@ void setup() {
     Serial.begin(9600);
 
     pinMode(VAPORIZER_PIN, OUTPUT);
-    digitalWrite(VAPORIZER_PIN, HIGH);
+    pinMode(VAPORIZER_PIN_INV, OUTPUT);
+    digitalWrite(VAPORIZER_PIN, LOW);
+    digitalWrite(VAPORIZER_PIN_INV, HIGH);
 
     WiFi.mode(WIFI_STA);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -26,9 +28,11 @@ void setup() {
 
 void loop() {
     if (vaporize) {
-        digitalWrite(VAPORIZER_PIN, LOW);
-        delay(VAPORIZER_DURATION);
         digitalWrite(VAPORIZER_PIN, HIGH);
+        digitalWrite(VAPORIZER_PIN_INV, LOW);
+        delay(VAPORIZER_DURATION);
+        digitalWrite(VAPORIZER_PIN, LOW);
+        digitalWrite(VAPORIZER_PIN_INV, HIGH);
         vaporize = false;
     }
 }
